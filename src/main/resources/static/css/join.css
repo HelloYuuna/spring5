@@ -1,0 +1,86 @@
+.container {
+    width: 450px;
+    margin: auto;
+}
+
+.title {
+    text-align: center;
+    color: #f08080;
+}
+
+table, th, td {
+    width: 100%;
+    border-collapse: collapse;
+    border: none;
+    padding: 10px;
+    color: #ffffff;
+}
+
+th {
+    width: 35%;
+    background: #f08080;
+    text-align: left;
+    padding-left: 25px;
+    border: 1px dashed #fff;
+}
+
+td {
+    border: 1px dashed #f08080;
+    padding-left: 15px;
+
+}
+
+input[type=text]:focus,
+input[type=password]:focus,
+input[type=tel]:focus,
+input[type=email]:focus {
+    background: #ffdab9;
+}
+
+.idInput {
+    width: 150px;
+    height: 30px;
+    padding-left: 10px;
+    margin-right: 10px;
+    border: 1px solid #ffb4a2;
+}
+
+.addrInput {
+    width: 230px;
+    height: 30px;
+    padding-left: 10px;
+    border: 1px solid #ffb4a2;
+}
+
+#membername {
+    width: 150px;
+    height: 30px;
+    padding-left: 10px;
+    border: 1px solid #ffb4a2;
+}
+
+input[type=password],
+input[type=tel],
+input[type=email] {
+    width: 200px;
+    height: 30px;
+    padding-left: 10px;
+    border: 1px solid #ffb4a2;
+}
+
+/* 서브밋 버튼 div */
+div.btn_submit {
+    text-align: center;
+    padding-top: 20px;
+}
+
+/* 버튼 디자인 */
+input[type=submit],
+input[type=button],
+input[type=reset] {
+    height: 30px;
+    border-radius: 6px;
+    border: 1px solid #fff;
+    background: #f4978e;
+    color: #fff;
+}

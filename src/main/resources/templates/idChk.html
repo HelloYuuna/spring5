@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>IdChk</title>
+  <link rel="stylesheet" th:href="@{/css/idChk.css}">
+  <script th:src="@{/javascript/check.js}"></script>
+</head>
+<body>
+<div  class="content">
+  <h2 id="title">[ ID 중복 확인 ]</h2>
+  <form th:action="@{/member/idChk}" method="post">
+    <table>
+      <tr>
+        <td>
+          <label for="serchId">serch ID</label>
+        </td>
+        <td>
+          <input type="text" name="serchId" id="serchId">
+        </td>
+        <td>
+          <input type="submit" value="Search">
+        </td>
+      </tr>
+    </table>
+  </form>
+  <hr>
+  <!--        null이라면 안쪽 div가 안보임-->
+  <div th:if="${searchId != null}">
+    <!--        result:true      -->
+    <div th:if="${result}">
+      <p>[[${searchId}]] 는 사용 가능합니다.</p>
+      <p>
+        <input th:id="${searchId}" type="button" value="ID사용하기" onclick="gotoJoin(this.getAttribute('id'))">
+      </p>
+    </div>
+    <!--        reulst:false     -->
+    <div th:if="${not result}">
+      <p>[[${searchId}]] 는 이미 사용중인 ID입니다.</p>
+    </div>
+  </div>
+</div>
+</body>
+</html>

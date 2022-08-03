@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Spring5 Home</title>
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+</head>
+<body>
+<div class="content">
+    <h2 id="title">[ spring5 ]</h2>
+    <!--     로그이 안햇을 때 : 회원가입, 로그인, 게시판     -->
+    <div sec:authorize="not isAuthenticated()">
+        <ul>
+            <li><a th:href="@{/member/join}">Sign up</a></li>
+            <li><a th:href="@{/member/loginForm}">Login</a></li>
+            <li><a th:href="@{/board/list}">Board</a></li>
+        </ul>
+    </div>
+    <!--     로그인 햇을 때 : 로그아웃, 개인정보 수정, 게시판      -->
+    <div sec:authorize="isAuthenticated()">
+        <ul>
+            <li><a th:href="@{/logout}">Logout</a></li>
+            <li><a th:href="@{/member/mypage}">Edit Profile</a></li>
+            <li><a th:href="@{/board/list}">Board</a></li>
+        </ul>
+    </div>
+    <hr>
+    <div class="authorize" sec:authorize="isAuthenticated()">
+        Authenticated
+        <!--/*        ROLE_USER    */-->
+        <p sec:authorize="hasRole('USER')">ROLE: USER</p>
+        <!--/*        ROLE_ADMIN    */-->
+        <p sec:authorize="hasRole('ADMIN')">ROLE: ADMIN</p>
+        <p sec:authentication="name"></p>
+        <p sec:authentication="principal"></p>
+        <p sec:authentication="principal.authorities"></p>
+    </div>
+    <div class="authorize" sec:authorize="not isAuthenticated()">
+        not Authenticated
+    </div>
+</div>
+</body>
+</html>

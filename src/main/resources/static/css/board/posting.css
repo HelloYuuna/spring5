@@ -1,0 +1,61 @@
+@charset "UTF-8";
+
+/* boardPost */
+
+
+/* form  */
+div.form {
+    /*width: 800px;*/
+    display: flex;
+    justify-content: center;
+}
+
+h2 {
+    display: flex;
+    justify-content: center;
+    color: #0077b6;
+
+}
+
+table, td, th {
+    /*width: 800px;*/
+    padding-right: 30px;
+    padding-left: 30px;
+    border-collapse: collapse;
+}
+
+table {
+    background-image: url("https://images.unsplash.com/photo-1506477331477-33d5d8b3dc85?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=734&q=80");
+    background-repeat: no-repeat;
+    background-size: cover;
+
+}
+
+input[type=text] {
+    border-radius: 15px;
+    border: none;
+    padding: 10px;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    height: 30px;
+    width: 415px
+}
+
+textarea {
+    border-radius: 15px;
+    border: none;
+    padding: 10px;
+    resize: none;
+}
+
+td.upload-file {
+    padding-top: 20px;
+    padding-bottom: 30px;
+}
+
+div.btn_submit {
+    padding-top: 30px;
+    text-align: center;
+}
+
+/* input:text textarea */

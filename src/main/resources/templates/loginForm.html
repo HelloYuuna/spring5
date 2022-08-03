@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>loginForm</title>
+  <link rel="stylesheet" th:href="@{/css/login.css}">
+  <script>
+    function gotoHome() {
+      location.href="../";
+    }
+  </script>
+</head>
+<body>
+<div class="content">
+  <h2 id="title">Login</h2>
+  <form th:action="@{/member/login}" method="post">
+    <table>
+      <tr>
+        <th>
+          <label for="memberid">ID</label>
+        </th>
+        <td>
+          <input type="text" name="memberid" placeholder="아이디 입력">
+        </td>
+      </tr>
+      <tr>
+        <th>
+          <label for="memberpw">Password</label>
+        </th>
+        <td>
+          <input type="password" name="memberpw" placeholder="비밀번호 입력">
+        </td>
+      </tr>
+    </table>
+    <div class="btn_submit">
+      <input type="submit" value="Login">
+      <input type="button" value="Back" onclick="gotoHome()">
+    </div>
+    <div class="white">
+      <!--            아이디 비번 틀렸을때 에러            -->
+      <span id="error-panel" th:if="${param.error}">ID 또는 비밀번호가 틀렸습니다.</span>
+    </div>
+  </form>
+</div>
+</body>
+</html>

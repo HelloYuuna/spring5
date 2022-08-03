@@ -1,0 +1,32 @@
+@charset "UTF-8";
+
+div.content {
+    font-family: Arial, Helvetica, sans-serif;
+    width: 330px;
+    margin: 30px auto;
+}
+
+h2#title {
+    background: #354f52;
+    color: #fff;
+    padding: 20px;
+    border-bottom: 1px dashed #cad2c5;
+    margin: 0 0 10px 0;
+}
+
+table, th, td {
+    width: 100%;
+    border-collapse: collapse;
+    border: none;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: #52796f;
+}
+
+input[type=text]:focus {
+    background: #ffdab9;
+}
+
+hr {
+    border: 1px dashed #cad2c5;
+}

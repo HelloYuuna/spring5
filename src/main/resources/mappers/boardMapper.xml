@@ -1,0 +1,106 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.softsociety.spring5.dao.BoardDAO">
+    <insert id="insertBoard" parameterType="Board">
+        INSERT INTO SPRING5_BOARD (BOARDNUM, MEMBERID, TITLE, TEXTAREA
+            <if test="originalfile != null and savedfile != null">
+                , ORIGINALFILE, SAVEDFILE
+            </if>
+        )
+        VALUES (SPRING5_BOARD_SEQ.nextval, #{memberid}, #{title}, #{textarea}
+            <if test="originalfile != null and savedfile != null">
+                , #{originalfile}, #{savedfile}
+            </if>
+        )
+    </insert>
+    <!--
+        **
+        * map 에 담아 보내기
+        * <where> 태그는 안에 조건절을 하나라도 만족해야 실행이 됨
+        **
+    -->
+    <select id="selectBoardList" parameterType="map" resultType="Board">
+                SELECT boardnum, memberid, title
+                , TO_CHAR(inputdate, '""YY"년 "MM"월 "DD"일 "DY""') as inputdate
+                , hits
+                FROM SPRING5_BOARD
+        <if test="searchword != null and type != null">
+            <where>
+                <if test="type == 'title'">
+                    upper(title) like '%' || upper(#{searchword}) || '%'
+                </if>
+                <if test="type == 'content'">
+                    upper(textarea) like '%' || upper(#{searchword}) || '%'
+                </if>
+                <if test="type == 'memberid'">
+                    upper(memberid) like '%' || upper(#{searchword}) || '%'
+                </if>
+                <if test="type == 'all'">
+                    upper(title) like '%' || upper(#{searchword}) || '%'
+                    OR
+                    upper(textarea) like '%' || upper(#{searchword}) || '%'
+                    OR
+                    upper(memberid) like '%' || upper(#{searchword}) || '%'
+                </if>
+            </where>
+        </if>
+        ORDER BY 1 desc
+    </select>
+
+    <select id="count" parameterType="map" resultType="int">
+        select count(*) from SPRING5_BOARD
+        <if test="searchword != null and type != null">
+            <where>
+                <if test="type == 'title'">
+                    upper(title) like '%' || upper(#{searchword}) || '%'
+                </if>
+                <if test="type == 'content'">
+                    upper(textarea) like '%' || upper(#{searchword}) || '%'
+                </if>
+                <if test="type == 'memberid'">
+                    upper(memberid) like '%' || upper(#{searchword}) || '%'
+                </if>
+                <if test="type == 'all'">
+                    upper(title) like '%' || upper(#{searchword}) || '%'
+                    OR
+                    upper(textarea) like '%' || upper(#{searchword}) || '%'
+                    OR
+                    upper(memberid) like '%' || upper(#{searchword}) || '%'
+                </if>
+            </where>
+        </if>
+    </select>
+
+    <select id="selectBoard" parameterType="int" resultType="Board">
+        SELECT BOARDNUM, memberid , TO_CHAR(inputdate, '""YY"년 "MM"월 "DD"일 "DY""') as inputdate
+             , hits , title, textarea, ORIGINALFILE, SAVEDFILE
+        FROM SPRING5_BOARD
+        WHERE BOARDNUM = #{boardnum}
+    </select>
+
+    <update id="updateBoardCNT" parameterType="int">
+        UPDATE SPRING5_BOARD
+        SET HITS = HITS + 1
+        WHERE BOARDNUM = #{boardnum}
+    </update>
+
+    <delete id="deleteBoard" parameterType="Board">
+        DELETE FROM SPRING5_BOARD
+        WHERE
+            BOARDNUM = #{boardnum} AND
+            MEMBERID = #{memberid}
+    </delete>
+
+    <update id="updateBoard" parameterType="Board">
+        UPDATE SPRING5_BOARD
+        SET TITLE = #{title} ,
+            TEXTAREA = #{textarea}
+            <if test="originalfile != null and savedfile != null">
+                , ORIGINALFILE = #{originalfile}
+                , SAVEDFILE = #{savedfile}
+            </if>
+        WHERE BOARDNUM = #{boardnum}
+        AND MEMBERID = #{memberid}
+    </update>
+</mapper>

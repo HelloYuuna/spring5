@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Read a Posting</title>
+    <script th:src="@{/javascript/board/board.js}"></script>
+</head>
+<body>
+<div class="container">
+    <div class="content" th:object="${board}">
+        <h2>Read</h2>
+        <table>
+            <tr>
+                <td>
+                    <span th:text="*{memberid}"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span th:text="*{inputdate}"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span th:text="*{hits}"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span th:text="*{title}"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <pre><span th:text="*{textarea}"></span></pre>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a th:href="@{/board/download(boardnum=*{boardnum})}">
+                        <span th:if="*{originalfile ne null}" th:text="*{originalfile}" th:field="*{originalfile}"></span>
+                    </a>
+                    <span th:if="*{originalfile eq null}">첨부파일 없음</span>
+                </td>
+            </tr>
+        </table>
+    <!--   본인 글일 경우 삭제 /수정   -->
+    <!--  #authentication.name 로그인한 아이디  -->
+        <div th:if="${#authentication.name} eq *{memberid}">
+            <a th:href="|javascript:update(*{boardnum})|">update</a>
+            <a th:href="|javascript:deleteboard(*{boardnum})|">delete</a>
+        </div>
+        <input type="button" value="back" onclick="location.href='list'">
+    </div>
+<!--   로그인 한정 댓글 작성 폼   -->
+<!--   로그인 상관없이 댓글 목록   -->
+</div>
+</body>
+</html>

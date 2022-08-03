@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Mypage</title>
+  <script th:src="@{/javascript/check.js}"></script>
+  <link rel="stylesheet" th:href="@{/css/join.css}">
+</head>
+<body>
+<div class="container">
+  <h2 class="title">Edit Profile</h2>
+  <form th:object="${member}" th:action="@{/member/mypage}" method="post" onsubmit="return mypageChk();">
+    <table>
+      <tr>
+        <th>
+          <label for="memberpw">비밀번호</label>
+        </th>
+        <td>
+          <input maxlength="10" placeholder="비밀번호" type="password" th:value="*{memberpw}" th:field="*{memberpw}">
+
+        </td>
+      </tr>
+      <tr>
+        <th>
+          <label for="pwChk">비밀번호 다시 입력</label>
+        </th>
+        <td>
+          <input maxlength="10" placeholder="한번더" type="password" id="pwChk">
+        </td>
+      </tr>
+      <tr>
+        <th>
+          <label for="membername">이름</label>
+        </th>
+        <td>
+          <input placeholder="이름" type="text" th:field="*{membername}">
+        </td>
+      </tr>
+      <tr>
+        <th>
+          <label for="email">이메일</label>
+        </th>
+        <td>
+          <input placeholder="이메일" type="email" th:field="*{email}">
+        </td>
+      </tr>
+      <tr>
+        <th>
+          <label for="phone">전화번호</label>
+        </th>
+        <td>
+          <input placeholder="전화번호" type="tel" th:field="*{phone}">
+        </td>
+      </tr>
+      <tr>
+        <th>
+          <label for="address">주소</label>
+        </th>
+        <td>
+          <input class="addrInput" placeholder="주소" type="text" th:field="*{address}">
+        </td>
+      </tr>
+      <tr>
+        <td class="btn_submit" colspan="2">
+          <input type="submit" value="Sign up">
+          <input type="reset" value="Reset">
+        </td>
+      </tr>
+    </table>
+  </form>
+</div>
+</body>
+</html>

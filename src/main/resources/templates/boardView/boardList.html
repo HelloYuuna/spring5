@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+  <title>Board List Main</title>
+  <script th:src="@{/javascript/board/board.js}"></script>
+  <link rel="stylesheet" th:href="@{/css/board/list.css}">
+</head>
+<body>
+<div class="container">
+  <div th:object="${navi}" class="cntPage">
+    <span th:text="|전체: *{totalRecordsCount}개 |"></span>
+    <span th:text="|*{currentPage}/*{totalPageCount}page|"></span>
+  </div>
+  <div class="list">
+    <h2 id="title">Board List</h2>
+    <!--/*		글쓰기 : 로그인해야 보여지는곳  */-->
+    <span class="link" sec:authorize="isAuthenticated()">
+				<a th:href="@{/board/boardPosting}">POST</a>
+			</span>
+    <span class="link" sec:authorize="isAuthenticated()">|</span>
+    <!--		메인 화면으로 이동  -->
+    <span class="link">
+				<a th:href="@{/}">HOME</a>
+			</span>
+    <table>
+      <tr th:each="list : ${boardList}">
+        <td class="num-cell">
+          <span th:text="|${list.boardnum}번|"></span>
+        </td>
+        <td class="title-cell">
+          <a th:href="@{/board/read(boardnum=${list.boardnum})}" th:text="${list.title}"></a>
+        </td>
+        <td class="memberid-cell">
+          <span th:text="${list.memberid}"></span>
+        </td>
+        <td class="hits-cell">
+          <span th:text="|${list.hits}회|"></span>
+        </td>
+        <td class="date-cell">
+          <span th:text="${list.inputdate}"></span>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <hr>
+<!--  <div th:text="${navi}"></div>-->
+<!--  <div>[[${navi}]]</div>-->
+  <div class="pageNum">
+<!--    sequence 객체 : 1~5 까지 1씩 증가 -->
+    <span th:each="counter : ${#numbers.sequence(navi.startPageGroup, navi.endPageGroup)}">
+      <th:block th:if="${counter eq navi.currentPage}"><b></th:block>
+        <a th:href="|javascript:pagingFormSubmit(${counter})|" th:text="${counter}"></a>
+      &nbsp;
+      <th:block th:if="${counter eq navi.currentPage}"></b></th:block>
+    </span>
+  </div>
+  <div class="form-paging-search">
+    <form id="pagingForm" th:action="@{/board/list}" method="get">
+      <input type="hidden" name="page" id="page">
+      <select name="type" id="type">
+        <option th:selected="${type} eq 'title'" value="title">title</option>
+        <option th:selected="${type} eq 'content'" value="content">content</option>
+        <option th:selected="${type} eq 'memberid'" value="memberid">memberid</option>
+        <option th:selected="${type} eq 'all'" value="all">all</option>
+      </select>
+      <input type="text" name="searchword" th:value="${searchword}">
+      <input type="button" value="Search" onclick="pagingFormSubmit(1)">
+    </form>
+  </div>
+</div>
+</body>
+</html>

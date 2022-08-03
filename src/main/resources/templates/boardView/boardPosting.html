@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Posting Page</title>
+  <script th:src="@{/javascript/board/board.js}"></script>
+  <link rel="stylesheet" th:href="@{/css/board/posting.css}">
+</head>
+<body>
+<div class="container">
+  <h2>POSTING</h2>
+  <div class="form">
+<!--  enctype="multipart/form-data" 파일을 가져가야 할 경우 text/plain은 텍스트만  -->
+    <form th:object="${board}" th:action="@{/board/list}" method="post" enctype="multipart/form-data" onsubmit="return postingChk();">
+      <table>
+        <tr>
+          <td class="text-area">
+            <label>
+              <input type="text" th:field="*{title}" placeholder="제목" autofocus >
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td class="text-area">
+            <label>
+              <textarea th:field="*{textarea}" cols="50" rows="20" placeholder="본문 내용(4000byte)"></textarea>
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td class="upload-file">
+            <!--     binary data 를 포함해야하므로 post 방식 필수       -->
+            <input type="file" name="upload" id="upload" size="10">
+          </td>
+        </tr>
+      </table>
+      <div class="btn_submit">
+        <input type="submit" value="SAVE">
+        <input type="reset" value="RESET">
+        <input type="button" value="BACK" onclick="location.href='list'">
+      </div>
+    </form>
+  </div>
+</div>
+</body>
+</html>
