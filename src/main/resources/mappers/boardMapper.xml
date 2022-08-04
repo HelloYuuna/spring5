@@ -103,4 +103,19 @@
         WHERE BOARDNUM = #{boardnum}
         AND MEMBERID = #{memberid}
     </update>
+
+    <insert id="insertReply" parameterType="Reply">
+        INSERT INTO SPRING5_REPLY (REPLYNUM, BOARDNUM, MEMBERID, TEXTAREA)
+        VALUES (SPRING5_REPLAY_SEQ.nextval, #{boardnum}, #{memberid}, #{textarea})
+    </insert>
+
+    <select id="replyList" parameterType="int" resultType="Reply">
+        SELECT * FROM SPRING5_REPLY
+        WHERE BOARDNUM = #{boardnum}
+    </select>
+
+    <delete id="deleteReply" parameterType="int">
+        DELETE FROM SPRING5_REPLY
+        WHERE REPLYNUM = #{replynum}
+    </delete>
 </mapper>

@@ -1,6 +1,7 @@
 package net.softsociety.spring5.service;
 
 import net.softsociety.spring5.domain.Board;
+import net.softsociety.spring5.domain.Reply;
 import net.softsociety.spring5.util.PageNavigator;
 
 import java.util.List;
@@ -26,4 +27,13 @@ public interface BoardService {
     
     // 게시글 수정
     int updateBoard(Board board);
+    
+    // 댓글 등록
+    int insertReply(Reply reply);
+    
+    // 댓글 읽기
+    List<Reply> replyList(int boardnum);
+    
+    // 댓글 삭제
+    int deleteReply(int replynum);
 }

@@ -3,6 +3,7 @@ package net.softsociety.spring5.service;
 import lombok.extern.slf4j.Slf4j;
 import net.softsociety.spring5.dao.BoardDAO;
 import net.softsociety.spring5.domain.Board;
+import net.softsociety.spring5.domain.Reply;
 import net.softsociety.spring5.util.PageNavigator;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,5 +80,20 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public int updateBoard(Board board) {
         return dao.updateBoard(board);
+    }
+
+    @Override
+    public int insertReply(Reply reply) {
+        return dao.insertReply(reply);
+    }
+
+    @Override
+    public List<Reply> replyList(int boardnum) {
+        return dao.replyList(boardnum);
+    }
+
+    @Override
+    public int deleteReply(int replynum) {
+        return dao.deleteReply(replynum);
     }
 }

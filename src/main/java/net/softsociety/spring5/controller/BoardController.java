@@ -1,8 +1,9 @@
 package net.softsociety.spring5.controller;
 
-import com.sun.deploy.net.URLEncoder;
+
 import lombok.extern.slf4j.Slf4j;
 import net.softsociety.spring5.domain.Board;
+import net.softsociety.spring5.domain.Reply;
 import net.softsociety.spring5.service.BoardService;
 import net.softsociety.spring5.util.FileService;
 import net.softsociety.spring5.util.PageNavigator;
@@ -18,10 +19,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 
 /**
@@ -113,11 +114,6 @@ public class BoardController {
             String savedfile = FileService.saveFile(upload, uploadPath);
             board.setOriginalfile(upload.getOriginalFilename());
             board.setSavedfile(savedfile);
-//            log.debug("name: {}", upload.getName());
-//            log.debug("OriginalFilename: {}", upload.getOriginalFilename());
-//            log.debug("type: {}", upload.getContentType());
-//            log.debug("size: {}", upload.getSize());                        //byte단위
-//            log.debug("isEmpty? {}", upload.isEmpty());
         }
 
         log.debug("작성한 게시글 : {}", board);
@@ -132,15 +128,27 @@ public class BoardController {
         return "redirect:/board/list";
     }
 
+    /**
+     * 게시글과 댓글 읽기
+     * @param boardnum 해당 게시글의 번호
+     * @param model board객체 reply객체 new Reply객체(댓글작성용)
+     * @return 해당 게시글
+     */
     @GetMapping("read")
     public String read(@RequestParam(value = "boardnum",defaultValue = "0") int boardnum
-            , Model model) {
+                                                                             , Model model) {
         log.debug("가져온 글번호: " + boardnum);
 
         Board board = service.selectBoard(boardnum);
         log.debug("가져온 게시글 정보: {}", board);
 
+        List<Reply> replies = service.replyList(boardnum);
+        
+        log.debug("댓글 목록: " + replies);
+
         model.addAttribute("board", board);
+        model.addAttribute("replies", replies);
+        model.addAttribute("reply", new Reply());
 
         return "/boardView/boardRead";
     }
@@ -176,8 +184,8 @@ public class BoardController {
         String fullPath = uploadPath + "/" + board.getSavedfile();
 
         //서버의 파일을 읽을 입력 스트림과 클라이언트에게 전달할 출력스트림
-        FileInputStream filein = null;
-        ServletOutputStream fileout = null;
+        FileInputStream filein;
+        ServletOutputStream fileout;
 
         try {
             filein = new FileInputStream(fullPath);
@@ -339,6 +347,44 @@ public class BoardController {
         }
 
         int boardnum = board.getBoardnum();
+        return "redirect:/board/read?boardnum=" + boardnum;
+    }
+
+    /**
+     * 댓글 작성
+     * @param reply 댓글 객체
+     * @param user 로그인한 유저
+     * @return 포스팅 + 게시글번호
+     */
+    @PostMapping("replyWrite")
+    public String replyWrite(Reply reply, @AuthenticationPrincipal UserDetails user) {
+        // 세션에서 로그인 한 아이디 받아서 reply 객체에 저장
+        reply.setMemberid(user.getUsername());
+        log.debug("리플객체: " + reply);
+        
+        int res = service.insertReply(reply);
+        if (res < 1) {
+            log.debug("등록 실패");
+
+        } else {
+            log.debug("등록 성공");
+        }
+
+        return "redirect:/board/read?boardnum=" + reply.getBoardnum();
+    }
+
+    @GetMapping("/rDelete")
+    public String replyDelete(int boardnum, int replynum) {
+        log.debug("게시글번호{}, 댓글번호{}", boardnum, replynum);
+
+        int res = service.deleteReply(replynum);
+        if (res < 1) {
+            log.debug("삭제 실패");
+
+        } else {
+            log.debug("삭제 성공");
+        }
+
         return "redirect:/board/read?boardnum=" + boardnum;
     }
 }

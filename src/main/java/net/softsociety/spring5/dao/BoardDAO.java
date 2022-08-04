@@ -1,6 +1,7 @@
 package net.softsociety.spring5.dao;
 
 import net.softsociety.spring5.domain.Board;
+import net.softsociety.spring5.domain.Reply;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.RowBounds;
 
@@ -36,4 +37,13 @@ public interface BoardDAO {
     
     // 게시글 수정
     int updateBoard(Board board);
+
+    //댓글 등록
+    int insertReply(Reply reply);
+    
+    // 댓글 수정
+    List<Reply> replyList(int boardnum);
+    
+    // 댓글 삭제
+    int deleteReply(int replynum);
 }

@@ -1,0 +1,149 @@
+@charset "UTF-8";
+
+body {
+    font-family: 'GmarketSans', sans-serif;
+    background: #cad2c5;
+}
+
+div.container {
+    width: 350px;
+    padding: 15px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 6px;
+    box-shadow: 5px 6px 20px 3px #b5bdb1;
+}
+
+h2 {
+    color: #354f52;
+    text-align: center;
+    text-decoration: underline;
+}
+
+table {
+    width: 100%;
+    font-size: 0.9em;
+    margin-bottom: 30px;
+}
+
+td {
+    padding: 15px;
+    border-bottom: 1px dashed #dad7cd;
+}
+
+tr.bID {
+    color: #0077b6;
+    text-align: right;
+}
+
+tr.bDate {
+    color: #dad7cd;
+    text-align: right;
+}
+
+tr.bHit {
+    color: #dad7cd;
+    text-align: right;
+}
+
+tr.bTitle {
+    color: #354f52;
+    font-weight: 600;
+}
+
+pre {
+    margin: 0;
+}
+
+tr.bContent {
+    color: #52796f;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:link
+, a:visited {
+    color: #52796f;
+}
+
+a:hover {
+    color: #2f3e46;
+    font-weight: 600;
+}
+
+a:active {
+    color: #0077b6;
+}
+
+div.updele {
+    text-align: right;
+    margin-left: 10px;
+    font-weight: 500;
+}
+
+input[type=button],
+input[type=submit] {
+    margin-top: 30px;
+    padding: 5px 10px 5px 10px;
+    background: #354f52;
+    color: #fff;
+    border-radius: 6px;
+    border: none;
+}
+
+input[type=button]:hover ,
+input[type=submit]:hover {
+    background: #52796f;
+}
+
+div.btn_back {
+    text-align: right;
+    margin-bottom: 30px;
+}
+
+textarea:focus {
+    background: #dad7cd;
+}
+
+textarea {
+    margin-right: 10px;
+    /*line-height: 80px;*/
+    width: 250px;
+    border-radius: 6px;
+    border: 1px solid #cad2c5;
+    padding: 10px 0 0 10px;
+    resize: none;
+}
+
+div.comment-area {
+    margin: 20px 0;
+    border-bottom: 1px dotted #dad7cd;
+}
+
+span {
+    display: block;
+}
+
+span.rID {
+    color: #0077b6;
+    font-size: 0.9em;
+}
+
+span.rText {
+    color: #52796f;
+    font-size: 0.9em;
+}
+
+span.rDate {
+    text-align: right;
+    color: #cad2c5;
+    font-size: 0.9em;
+}
+
+div.rDelte {
+    font-size: 0.8em;
+    text-align: right;
+    color: #52796f;
+}

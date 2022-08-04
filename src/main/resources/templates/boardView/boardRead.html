@@ -4,34 +4,36 @@
 <head>
     <meta charset="UTF-8">
     <title>Read a Posting</title>
+    <link rel="stylesheet" th:href="@{/css/board/read.css}">
     <script th:src="@{/javascript/board/board.js}"></script>
+    <script th:src="@{/javascript/board/reply.js}"></script>
 </head>
 <body>
 <div class="container">
     <div class="content" th:object="${board}">
         <h2>Read</h2>
         <table>
-            <tr>
+            <tr class="bID">
                 <td>
                     <span th:text="*{memberid}"></span>
                 </td>
             </tr>
-            <tr>
+            <tr class="bDate">
                 <td>
                     <span th:text="*{inputdate}"></span>
                 </td>
             </tr>
-            <tr>
+            <tr class="bHit">
                 <td>
-                    <span th:text="*{hits}"></span>
+                    <span th:text="|*{hits}회|"></span>
                 </td>
             </tr>
-            <tr>
+            <tr class="bTitle">
                 <td>
                     <span th:text="*{title}"></span>
                 </td>
             </tr>
-            <tr>
+            <tr class="bContent">
                 <td>
                     <pre><span th:text="*{textarea}"></span></pre>
                 </td>
@@ -47,14 +49,34 @@
         </table>
     <!--   본인 글일 경우 삭제 /수정   -->
     <!--  #authentication.name 로그인한 아이디  -->
-        <div th:if="${#authentication.name} eq *{memberid}">
-            <a th:href="|javascript:update(*{boardnum})|">update</a>
-            <a th:href="|javascript:deleteboard(*{boardnum})|">delete</a>
+        <div class="updele" th:if="${#authentication.name} eq *{memberid}">
+            <a th:href="|javascript:update(*{boardnum})|"><i>UPDATE</i></a>
+            &nbsp;/&nbsp;
+            <a th:href="|javascript:deleteboard(*{boardnum})|"><i>DELETE</i></a>
         </div>
-        <input type="button" value="back" onclick="location.href='list'">
-    </div>
+        <div class="btn_back">
+            <input type="button" value="back" onclick="location.href='list'">
+        </div>
 <!--   로그인 한정 댓글 작성 폼   -->
+        <div th:object="${reply}" class="replyWrite" sec:authorize="isAuthenticated()">
+            <form th:action="@{/board/replyWrite}" method="post" onsubmit="return replyChk();">
+                <input type="hidden" name="boardnum" th:value="${board.boardnum}">
+                <textarea th:field="*{textarea}" placeholder="comment(50)" maxlength="50" rows="5"></textarea>
+                <input type="submit" value="submit">
+            </form>
+        </div>
+    </div>
 <!--   로그인 상관없이 댓글 목록   -->
+    <div class="comment-area" th:each="replies : ${replies}">
+        <span class="rID" th:text="${replies.memberid}"></span>
+        <span class="rText" th:text="${replies.textarea}"></span>
+        <span class="rDate" th:text="${replies.inputdate}"></span>
+        <div class="rDelte">
+            <span th:if="${#authentication.name} eq ${replies.memberid}">
+                <a th:href="|javascript:replyDelete(${replies.replynum},${replies.boardnum})|">DELETE</a>
+            </span>
+        </div>
+    </div>
 </div>
 </body>
 </html>

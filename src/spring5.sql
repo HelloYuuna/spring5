@@ -62,7 +62,7 @@ CREATE SEQUENCE spring5_replay_seq;
 
 -- insert reply
 INSERT INTO spring5_reply (replynum, boardnum, memberid, textarea)
-VALUES (spring5_replay_seq.nextval, 1, 'cha', '사료삽니다') ;
+VALUES (spring5_replay_seq.nextval, 2, 'cha', '사료삽니다') ;
 
 
 select * from spring5_board;
